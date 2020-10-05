@@ -11,6 +11,7 @@ namespace TICTacToeGame
             ticTacToeGame.player = ticTacToeGame.ChooseOption();
             ticTacToeGame.computer = ticTacToeGame.player == 'X' ? 'O' : 'X';
             ticTacToeGame.ShowBoard();
+            ticTacToeGame.MakeMove();
         }
     }
 }
