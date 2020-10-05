@@ -1,12 +1,13 @@
 ﻿using System;
-
-namespace TicTacToeGame
+namespace TICTacToeGame
 {
     class Program
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Tic Tac Toe player would like to challange computer!");
+            Console.WriteLine("Welcome to Tic Tac Toe!");
+            var ticTacToeGame = new TicTacToeGame();
+            ticTacToeGame.InitializeBoard();
         }
     }
 }
