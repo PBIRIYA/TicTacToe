@@ -1,5 +1,5 @@
 ﻿using System;
-namespace TICTacToeGame
+namespace TicTacToeGame
 {
     class Program
     {
@@ -8,8 +8,8 @@ namespace TICTacToeGame
             Console.WriteLine("Welcome to Tic Tac Toe!");
             var ticTacToeGame = new TicTacToeGame();
             ticTacToeGame.InitializeBoard();
-            ticTacToeGame.player = ticTacToeGame.ChooseOption();
-            ticTacToeGame.computer = ticTacToeGame.player == 'X' ? 'O' : 'X';
+            ticTacToeGame.Player = ticTacToeGame.ChooseOption();
+            ticTacToeGame.Computer = ticTacToeGame.Player == 'X' ? 'O' : 'X';
         }
     }
 }

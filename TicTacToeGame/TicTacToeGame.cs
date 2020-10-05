@@ -1,18 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-namespace TICTacToeGame
+namespace TicTacToeGame
 {
     class TicTacToeGame
     {
-        public char[] board { get; set; }
-        public char player { get; set; }
-        public char computer { get; set; }
+        public char[] Board { get; set; }
+        public char Player { get; set; }
+        public char Computer { get; set; }
         public void InitializeBoard()
         {
-            board = new char[10];
+            Board = new char[10];
             for (int i = 1; i < 10; i++)
-                board[i] = ' ';
+                Board[i] = ' ';
         }
         public char ChooseOption()
         {
