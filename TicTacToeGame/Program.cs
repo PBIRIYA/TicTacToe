@@ -1,5 +1,5 @@
 ﻿using System;
-namespace TICTacToeGame
+namespace TicTacToeGame
 {
     class Program
     {
