@@ -1,66 +1,93 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-namespace TICTacToeGame
+
+namespace TicTacToe
 {
     class TicTacToeGame
     {
-        public char[] board { get; set; }
-        public char player { get; set; }
-        public char computer { get; set; }
-        public void InitializeBoard()
+        char[] _board;
+        char _userChoice;
+        char _systemChoice;
+        int currUserInput;
+
+        public TicTacToeGame()
         {
-            board = new char[10];
+            _board = new char[10];
+        }
+
+        public char[] Board { get => _board; }
+        public char UserChoice { get => _userChoice; }
+        public char SystemChoice { get => _systemChoice; }
+
+        public void StartGame()
+        {
             for (int i = 1; i < 10; i++)
-                board[i] = ' ';
+            {
+                _board[i] = ' ';
+            }
         }
-        public char ChooseOption()
+
+        public void UsersChoice()
         {
-            Console.Write("Choose X or O : ");
-            var input = char.ToUpper(Convert.ToChar(Console.ReadLine()));
-            return (input == 'X' || input == 'O') ? input : ChooseOption();
+            Console.Write("Enter your choice to play further\n 'X' or 'O' ? ");
+            char ch = Convert.ToChar(Console.ReadLine());
+
+            if (ch == 'X' || ch == 'O')
+            {
+                _userChoice = ch;
+                if (ch == 'X')
+                    _systemChoice = 'O';
+                else
+                    _systemChoice = 'X';
+            }
+            else
+            {
+                Console.WriteLine("Wrong Choice");
+                UsersChoice();
+            }
         }
+
         public void ShowBoard()
         {
             for (int i = 1; i < 10; i++)
             {
                 if (i % 3 == 0)
                 {
-                    Console.Write("{0}\n", board[i]);
-                    if (i != 9)
-                        Console.WriteLine("------------");
+                    Console.Write(_board[i]);
+                    Console.WriteLine("\n----------");
                 }
                 else
-                    Console.Write(" {0} |", board[i]);
+                {
+                    Console.Write(_board[i] + " | ");
+                }
             }
         }
+
+        public void UserMove()
+        {
+            Console.WriteLine("Enter index (1-9) to mark your choice :");
+            int userMove = Convert.ToInt32(Console.ReadLine());
+            if (userMove > 0 && userMove < 10)
+            {
+                if (_board[userMove] == ' ')
+                    currUserInput = userMove;
+                else
+                {
+                    Console.WriteLine("The given Index isn't empty");
+                    UserMove();
+                }
+            }
+            else
+            {
+                Console.WriteLine("Index should be between 1 to 9");
+                UserMove();
+            }
+        }
+
         public void MakeMove()
         {
-            Console.Write("Choose an Index to mark : ");
-            var index = Convert.ToInt32(Console.ReadLine());
-            var isFree = CheckFreeSpace(index);
-            if (index <= 0 || index > 9)
-            {
-                Console.WriteLine("Invalid Input!\nTry Again");
-                MakeMove();
-            }
-            else if (!isFree)
-            {
-                Console.WriteLine("The Location is not empty please select a different location");
-                MakeMove();
-            }
-            else
-            {
-                board[index] = player;
-                ShowBoard();
-            }
-        }
-        public bool CheckFreeSpace(int index)
-        {
-            if (board[index] == ' ')
-                return true;
-            else
-                return false;
+            _board[currUserInput] = _userChoice;
         }
     }
 }
