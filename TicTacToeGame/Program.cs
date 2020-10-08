@@ -12,7 +12,7 @@ namespace TICTacToeGame
             ticTacToeGame.computer = ticTacToeGame.player == 'X' ? 'O' : 'X';
             ticTacToeGame.ShowBoard();
             var player = ticTacToeGame.Toss();
-            ticTacToeGame.MakeMove();
+            ticTacToeGame.GetComputerMove();
         }
     }
 }

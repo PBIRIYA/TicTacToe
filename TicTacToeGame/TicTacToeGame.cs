@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+
 namespace TICTacToeGame
 {
     class TicTacToeGame
@@ -11,6 +12,7 @@ namespace TICTacToeGame
         public char player { get; set; }
         public char computer { get; set; }
         public enum Player { User, Computer };
+
         public TicTacToeGame()
         {
         }
@@ -20,11 +22,14 @@ namespace TICTacToeGame
             for (int i = 1; i < 10; i++)
                 board[i] = ' ';
         }
+
+        public char ChooseOption()
         {
             Console.Write("Choose X or O : ");
             var input = char.ToUpper(Convert.ToChar(Console.ReadLine()));
             return (input == 'X' || input == 'O') ? input : ChooseOption();
         }
+
         public void ShowBoard()
         {
             for (int i = 1; i < 10; i++)
@@ -39,6 +44,7 @@ namespace TICTacToeGame
                     Console.Write(" {0} |", board[i]);
             }
         }
+
         public void MakeMove(char ch)
         {
             if (ch == player)
@@ -55,6 +61,7 @@ namespace TICTacToeGame
             }
 
         }
+
         public void MoveIfFree(int index, char ch)
         {
             if (index <= 0 || index > 9)
@@ -73,6 +80,7 @@ namespace TICTacToeGame
                 ShowBoard();
             }
         }
+
         public Player Toss()
         {
             return new Random().Next(0, 2) == 1 ? Player.User : Player.Computer;
@@ -89,9 +97,10 @@ namespace TICTacToeGame
                     (board[1] == ch && board[5] == ch && board[9] == ch) ||
                     (board[3] == ch && board[5] == ch && board[7] == ch));
         }
+
         public int GetComputerMove()
         {
-            return GetWinningMove(computer);
+            return GetWinningMove(computer) == 0 ? GetWinningMove(player) : 0;
         }
         public int GetWinningMove(char ch)
         {
@@ -105,7 +114,9 @@ namespace TICTacToeGame
                         return index;
                 }
             }
+
             return 0;
         }
+
     }
 }
