@@ -7,16 +7,19 @@ namespace TICTacToeGame
     class TicTacToeGame
     {
         public char[] board { get; set; }
+        public Dictionary<Player, char> Letter;
         public char player { get; set; }
         public char computer { get; set; }
         public enum Player { User, Computer };
+        public TicTacToeGame()
+        {
+        }
         public void InitializeBoard()
         {
             board = new char[10];
             for (int i = 1; i < 10; i++)
                 board[i] = ' ';
         }
-        public char ChooseOption()
         {
             Console.Write("Choose X or O : ");
             var input = char.ToUpper(Convert.ToChar(Console.ReadLine()));
@@ -36,37 +39,45 @@ namespace TICTacToeGame
                     Console.Write(" {0} |", board[i]);
             }
         }
-        public void MakeMove()
+        public void MakeMove(char ch)
         {
-            Console.Write("Choose an Index to mark : ");
-            var index = Convert.ToInt32(Console.ReadLine());
-            var isFree = CheckFreeSpace(index);
-            if (index <= 0 || index > 9)
+            if (ch == player)
             {
-                Console.WriteLine("Invalid Input!\nTry Again");
-                MakeMove();
-            }
-            else if (!isFree)
-            {
-                Console.WriteLine("The Location is not empty please select a different location");
-                MakeMove();
+                Console.Write("Choose an Index to mark : ");
+                var index = Convert.ToInt32(Console.ReadLine());
+                MoveIfFree(index, ch);
+                if (IsWinner(player))
+                    Console.WriteLine("Player Won the game.");
             }
             else
             {
-                board[index] = player;
+                MoveIfFree(GetComputerMove(), ch);
+            }
+
+        }
+        public void MoveIfFree(int index, char ch)
+        {
+            if (index <= 0 || index > 9)
+            {
+                Console.WriteLine("Invalid Input!\nTry Again");
+                MakeMove(ch);
+            }
+            else if (board[index] != ' ')
+            {
+                Console.WriteLine("The Location is not empty please select a different location");
+                MakeMove(ch);
+            }
+            else
+            {
+                board[index] = ch;
                 ShowBoard();
             }
-            if (IsWinner(player))
-                Console.WriteLine("Player Won the game.");
-        }
-        public bool CheckFreeSpace(int index)
-        {
-            return board[index] == ' ';
         }
         public Player Toss()
         {
             return new Random().Next(0, 2) == 1 ? Player.User : Player.Computer;
         }
+
         public bool IsWinner(char ch)
         {
             return ((board[1] == ch && board[2] == ch && board[3] == ch) ||
@@ -77,6 +88,24 @@ namespace TICTacToeGame
                     (board[3] == ch && board[6] == ch && board[9] == ch) ||
                     (board[1] == ch && board[5] == ch && board[9] == ch) ||
                     (board[3] == ch && board[5] == ch && board[7] == ch));
+        }
+        public int GetComputerMove()
+        {
+            return GetWinningMove(computer);
+        }
+        public int GetWinningMove(char ch)
+        {
+            for (int index = 1; index < 10; index++)
+            {
+                var boardCopy = board;
+                if (boardCopy[index] == ' ')
+                {
+                    MoveIfFree(index, ch);
+                    if (IsWinner(ch))
+                        return index;
+                }
+            }
+            return 0;
         }
     }
 }
